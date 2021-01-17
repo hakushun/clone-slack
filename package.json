@@ -1,0 +1,88 @@
+{
+  "name": "clone-slack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "npm run build && next export",
+    "typecheck": "tsc -p . --noEmit",
+    "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
+    "lint:eslint": "eslint --fix'./src/**/*.{ts,tsx}'",
+    "lint:prettier": "prettier --write './src/**/*.{ts,tsx}'",
+    "lint:stylelint": "stylelint --fix './src/**/*.{css,scss}'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx}": [
+      "eslint --fix'./src/**/*.{ts,tsx}'",
+      "prettier --write './src/**/*.{ts,tsx}'"
+    ],
+    "src/**/*.{css,scss}": [
+      "stylelint --fix './src/**/*.{css,scss}'"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "@types/node": "^14.14.14",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.12",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-immutable": "^1.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "redux-devtools-extension": "^2.13.8",
+    "sass": "^1.30.0",
+    "stylelint": "^13.8.0",
+    "stylelint-config-recess-order": "^2.3.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "typescript": "^4.1.3",
+    "vercel": "^21.0.1"
+  },
+  "dependencies": {
+    "emoji-mart": "^3.0.0",
+    "final-form": "^4.20.1",
+    "firebase": "^8.2.1",
+    "firebase-admin": "^9.4.2",
+    "js-cookie": "^2.2.1",
+    "md5": "^2.3.0",
+    "mime-types": "^2.1.28",
+    "moment": "^2.29.1",
+    "next": "^10.0.3",
+    "react": "^17.0.1",
+    "react-avatar-editor": "^11.1.0",
+    "react-color": "^2.19.3",
+    "react-dom": "^17.0.1",
+    "react-final-form": "^6.5.2",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-effects-steps": "^1.0.3",
+    "reselect": "^4.0.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.2",
+    "typescript-fsa": "^3.0.0",
+    "typescript-fsa-reducers": "^1.2.2",
+    "uuid": "^8.3.2"
+  }
+}

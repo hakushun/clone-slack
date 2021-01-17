@@ -1,0 +1,16 @@
+@function rem($px) {
+  @return ($px / 16) * 1rem;
+}
+
+$breakpoints: (
+  'md': 'screen and (max-width: 767px)',
+  'lg': 'screen and (min-width: 768px)',
+  'tablet': 'screen and (min-width: 768px) and (max-width: 1200px)',
+) !default;
+
+// メディアクエリ
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
