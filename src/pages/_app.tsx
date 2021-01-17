@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
 import { useStore } from '../redux/configureStore';
 
-import '../components/stylesheets/reset.scss';
-import '../components/stylesheets/global.scss';
+import 'tailwindcss/tailwind.css';
 
 export default function App({
   Component,
