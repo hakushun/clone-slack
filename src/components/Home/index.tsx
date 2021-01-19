@@ -1,4 +1,6 @@
 import React from 'react';
-// import styles from './index.module.scss';
+import { withAuth } from '../../helpers/withAuth';
 
-export const Home: React.VFC = () => <div>Home</div>;
+export const Component: React.VFC = () => <div>Home</div>;
+
+export const Home = withAuth(Component);
