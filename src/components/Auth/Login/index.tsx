@@ -27,20 +27,26 @@ export const Login: React.VFC = () => {
   };
 
   return (
-    <section id="login">
+    <section
+      id="login"
+      className="w-full h-screen px-4 flex flex-col justify-center items-center">
       <Form
         onSubmit={handleOnSubmit}
         initialValues={{}}
         subscription={{ pristine: true }}
         render={({ handleSubmit, pristine }) => (
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            className="px-10 md:px-20 py-7 bg-white rounded shadow">
             <fieldset>
               <legend>
-                <h2>Login for Clone-Slack</h2>
+                <h2 className="py-4 text-2xl md:text-3xl">
+                  Login for Clone-Slack
+                </h2>
               </legend>
-              <div>
+              <div className="flex flex-col">
                 <Field
-                  type="text"
+                  type="email"
                   name="email"
                   validate={composeValidators(
                     isRequired('Email Address'),
@@ -54,21 +60,30 @@ export const Login: React.VFC = () => {
                   }}>
                   {({ input, meta }) => (
                     <>
-                      <label htmlFor="email">Email</label>
+                      <label htmlFor="email" className="text-xl">
+                        Email
+                      </label>
                       <input
                         id="email"
                         placeholder="Email Address"
                         required
                         aria-required
                         disabled={isLoading}
+                        className="text-lg py-1 px-2 border-2 border-purple-400 rounded"
                         {...input}
                       />
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
+                      <div className="h-7">
+                        {meta.error && meta.touched && (
+                          <span className="text-lg text-red-500">
+                            {meta.error}
+                          </span>
+                        )}
+                      </div>
                     </>
                   )}
                 </Field>
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Field
                   type="password"
                   name="password"
@@ -81,7 +96,9 @@ export const Login: React.VFC = () => {
                   }}>
                   {({ input, meta }) => (
                     <>
-                      <label htmlFor="password">Password</label>
+                      <label htmlFor="password" className="text-xl">
+                        Password
+                      </label>
                       <input
                         id="password"
                         placeholder="Password"
@@ -91,27 +108,39 @@ export const Login: React.VFC = () => {
                         minLength={6}
                         maxLength={50}
                         disabled={isLoading}
+                        className="text-lg py-1 px-2 border-2 border-purple-400 rounded"
                         {...input}
                       />
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
+                      <div className="h-7">
+                        {meta.error && meta.touched && (
+                          <span className="text-lg text-red-500">
+                            {meta.error}
+                          </span>
+                        )}
+                      </div>
                     </>
                   )}
                 </Field>
               </div>
             </fieldset>
-            <div>
-              <button type="submit" disabled={isLoading || pristine}>
+            <div className="mt-4 flex justify-center">
+              <button
+                type="submit"
+                disabled={isLoading || pristine}
+                className="px-8 py-2 bg-purple-200 border-2 border-purple-200 rounded-xl text-xl hover:bg-purple-400 shadow disabled:cursor-not-allowed active:bg-purple-500">
                 Login
               </button>
             </div>
           </form>
         )}
       />
-      <div>
-        <div>
-          Don&apos;t have an account{' '}
+      <div className="mt-10 px-4 md:px-20 py-5 bg-white rounded shadow">
+        <div className="text-lg">
+          Don&apos;t have an account?{' '}
           <Link href="/register">
-            <a>Register Now</a>
+            <a className="text-blue-600 underline hover:no-underline">
+              Register Now
+            </a>
           </Link>
         </div>
       </div>
