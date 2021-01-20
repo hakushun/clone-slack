@@ -9,7 +9,7 @@
   "rules": {
     "indentation": 2,
     "at-rule-no-unknown":[true, {
-      "ignoreAtRules": ["mixin", "extends", "include", "function", "return", "use"]
+      "ignoreAtRules": ["tailwind", "layer", "apply", "variants", "responsive", "screen"]
     }],
     "declaration-no-important": true,
     "selector-max-universal": 1,
