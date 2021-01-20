@@ -19,7 +19,12 @@ const actionCreator = actionCreatorFactory();
 export const authUser = actionCreator<AuthUser>('AUTH_USER');
 export const logoutUser = actionCreator('LOGOUT_USER');
 
-const INITIAL_STATE: User = { isAuth: false, id: '', username: '', avatarURL: '' };
+const INITIAL_STATE: User = {
+  isAuth: false,
+  id: '',
+  username: '',
+  avatarURL: '',
+};
 
 const reducer = reducerWithInitialState(INITIAL_STATE)
   .case(authUser, (state, payload) => {
@@ -40,8 +45,6 @@ export const selectIsAuth = createSelector(
 );
 
 export const selectUser = createSelector(
-  [
-    (state: RootState) => state.ui.user,
-  ],
+  [(state: RootState) => state.ui.user],
   (user) => user,
 );
