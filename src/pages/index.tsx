@@ -1,6 +1,6 @@
 import React from 'react';
-import { Home } from '../components/Home';
+import { App } from '../components/App';
 
-const index: React.VFC = () => <Home />;
+const index: React.VFC = () => <App />;
 
 export default index;
