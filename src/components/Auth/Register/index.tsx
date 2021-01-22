@@ -49,7 +49,7 @@ export const Register: React.VFC = () => {
   return (
     <section
       id="register"
-      className="w-full h-screen px-4 flex flex-col justify-center items-center">
+      className="w-full h-screen px-4 flex flex-col justify-center items-center bg-purple-50">
       <Form
         onSubmit={handleOnSubmit}
         initialValues={{}}

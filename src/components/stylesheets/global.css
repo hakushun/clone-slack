@@ -4,10 +4,10 @@
 
 @layer base {
   html {
-    @apply font-sans;
+    @apply font-mono;
   }
 
   body {
-    @apply bg-purple-50 text-gray-900;
+    @apply text-gray-900;
   }
 }
