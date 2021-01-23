@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Field } from 'react-final-form';
-import md5 from 'md5';
+import { useAuth } from '../../../lib/firebase/useAuth';
 import {
   composeValidators,
   isEmail,
@@ -10,40 +9,17 @@ import {
   minValue,
   mxaValue,
 } from '../../../lib/validations';
-import firebase from '../../../lib/firebase/firebase';
 
+export type RegisterPayload = {
+  username: string;
+  email: string;
+  password: string;
+};
 export const Register: React.VFC = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isLoading, signUp } = useAuth();
 
-  const handleOnSubmit = async (values: any) => {
-    setIsLoading(true);
-    const { username, email, password } = values;
-
-    try {
-      const createdUser = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-
-      if (!createdUser.user) throw new Error();
-
-      await createdUser.user.updateProfile({
-        displayName: username,
-        photoURL: `http://gravatar.com/avatar/${md5(
-          createdUser.user.uid,
-        )}?d=identicon`,
-      });
-
-      await firebase.database().ref('users').child(createdUser.user.uid).set({
-        name: createdUser.user.displayName,
-        avatar: createdUser.user.photoURL,
-      });
-      router.push('/');
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
+  const handleOnSubmit = async (values: RegisterPayload) => {
+    await signUp(values);
   };
 
   return (
