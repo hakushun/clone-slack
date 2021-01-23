@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { selectUser } from '../../redux/modules/user';
-import firebase from '../../lib/firebase/firebase';
+import { useAuth } from '../../lib/firebase/useAuth';
 import { toggleChannelForm } from '../../redux/modules/modal';
 import { ChannelForm } from '../ChannelForm';
 import {
@@ -16,10 +15,11 @@ import {
   focusChannel,
   selectChannel,
 } from '../../redux/modules/channel';
+import { channelsRef } from '../../lib/firebase/database';
 
 export const SideMenu: React.VFC = () => {
-  const router = useRouter();
   const dispatch = useDispatch();
+  const { signOut } = useAuth();
   const user = useSelector(selectUser);
   const currentChannel = useSelector(selectChannel);
   const channels = useSelector(selectChannels);
@@ -29,14 +29,13 @@ export const SideMenu: React.VFC = () => {
     dispatch(focusChannel(channel));
   };
 
-  const toggleMenu = () => {
-    setIsOpened(!isOpend);
+  const handleSignOut = async () => {
+    await signOut();
+    setIsOpened(false);
   };
 
-  const signOut = async () => {
-    await firebase.auth().signOut();
-    router.push('/login');
-    setIsOpened(false);
+  const toggleMenu = () => {
+    setIsOpened(!isOpend);
   };
 
   const openChannelForm = () => {
@@ -44,18 +43,15 @@ export const SideMenu: React.VFC = () => {
   };
 
   useEffect(() => {
-    firebase
-      .database()
-      .ref('channels')
-      .on('value', (snapshots) => {
-        const loadedChannels: Channels = [];
-        snapshots.forEach((snapshot) => {
-          loadedChannels.push(snapshot.val());
-        });
-        dispatch(setChannels(loadedChannels));
+    channelsRef.on('value', (snapshots) => {
+      const loadedChannels: Channels = [];
+      snapshots.forEach((snapshot) => {
+        loadedChannels.push(snapshot.val());
       });
+      dispatch(setChannels(loadedChannels));
+    });
     return () => {
-      firebase.database().ref('channels').off();
+      channelsRef.off();
     };
   }, [dispatch]);
 
@@ -97,7 +93,7 @@ export const SideMenu: React.VFC = () => {
             <button
               type="button"
               className="py-2 rounded hover:bg-gray-300 focus:bg-gray-300"
-              onClick={signOut}>
+              onClick={handleSignOut}>
               Sign Out
             </button>
           </div>
