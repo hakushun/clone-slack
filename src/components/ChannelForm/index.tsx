@@ -13,7 +13,7 @@ import {
   mxaValue,
 } from '../../lib/validations';
 import { selectUser } from '../../redux/modules/user';
-import firebase from '../../lib/firebase/firebase';
+import { channelsRef } from '../../lib/firebase/database';
 
 type ChannelFormType = {
   name: string;
@@ -29,7 +29,7 @@ export const ChannelForm: React.VFC = () => {
   const handleOnSubmit = async (values: ChannelFormType) => {
     setIsLoading(true);
     const { name, description } = values;
-    const { key } = firebase.database().ref('channels').push();
+    const { key } = channelsRef.push();
 
     const newChannel = {
       id: key,
@@ -42,7 +42,7 @@ export const ChannelForm: React.VFC = () => {
     };
 
     try {
-      await firebase.database().ref('channels').child(key!).update(newChannel);
+      await channelsRef.child(key!).update(newChannel);
       dispatch(toggleChannelForm(false));
       setIsLoading(false);
     } catch (err) {
