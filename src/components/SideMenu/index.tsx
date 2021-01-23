@@ -1,16 +1,33 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import clsx from 'clsx';
 import { selectUser } from '../../redux/modules/user';
 import firebase from '../../lib/firebase/firebase';
 import { toggleChannelForm } from '../../redux/modules/modal';
 import { ChannelForm } from '../ChannelForm';
+import {
+  Channels,
+  selectChannels,
+  setChannels,
+} from '../../redux/modules/channels';
+import {
+  Channel,
+  focusChannel,
+  selectChannel,
+} from '../../redux/modules/channel';
 
 export const SideMenu: React.VFC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const currentChannel = useSelector(selectChannel);
+  const channels = useSelector(selectChannels);
   const [isOpend, setIsOpened] = useState<boolean>(false);
+
+  const handleFocus = (channel: Channel) => {
+    dispatch(focusChannel(channel));
+  };
 
   const toggleMenu = () => {
     setIsOpened(!isOpend);
@@ -25,6 +42,22 @@ export const SideMenu: React.VFC = () => {
   const openChannelForm = () => {
     dispatch(toggleChannelForm(true));
   };
+
+  useEffect(() => {
+    firebase
+      .database()
+      .ref('channels')
+      .on('value', (snapshots) => {
+        const loadedChannels: Channels = [];
+        snapshots.forEach((snapshot) => {
+          loadedChannels.push(snapshot.val());
+        });
+        dispatch(setChannels(loadedChannels));
+      });
+    return () => {
+      firebase.database().ref('channels').off();
+    };
+  }, [dispatch]);
 
   return (
     <section className="bg-pink-900 text-white">
@@ -75,32 +108,31 @@ export const SideMenu: React.VFC = () => {
         <div className="flex items-center justify-between p-3">
           <div className="flex">
             <img src="/images/switch.svg" alt="" width="24" />
-            <span>CHANNELS (0)</span>
+            <span>CHANNELS ({channels.length})</span>
           </div>
           <button type="button" onClick={openChannelForm}>
             <img
               src="/images/plus.svg"
               alt=""
               width="24"
-              className="w-6 rounded-full hover:bg-pink-800"
+              className="w-6 rounded-full hover:bg-pink-600"
             />
           </button>
         </div>
         <ul className="flex flex-col justify-center">
-          <li>
-            <button
-              type="button"
-              className="w-full px-3 py-1 text-left hover:bg-pink-800">
-              # Channel1
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              className="w-full px-3 py-1 text-left hover:bg-pink-800">
-              # Channel2
-            </button>
-          </li>
+          {channels.map((channel) => (
+            <li key={channel.id}>
+              <button
+                type="button"
+                className={clsx(
+                  'w-full px-3 py-1 text-left hover:bg-pink-600',
+                  currentChannel.id === channel.id && 'bg-pink-700',
+                )}
+                onClick={() => handleFocus(channel)}>
+                # {channel.name}
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
       <ChannelForm />
