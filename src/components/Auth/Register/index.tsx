@@ -49,7 +49,7 @@ export const Register: React.VFC = () => {
   return (
     <section
       id="register"
-      className="w-full h-screen px-4 flex flex-col justify-center items-center bg-purple-50">
+      className="w-full h-screen px-4 flex flex-col justify-center items-center bg-purple-100">
       <Form
         onSubmit={handleOnSubmit}
         initialValues={{}}
@@ -57,7 +57,7 @@ export const Register: React.VFC = () => {
         render={({ handleSubmit, pristine }) => (
           <form
             onSubmit={handleSubmit}
-            className="px-10 md:px-20 py-7 bg-white rounded shadow">
+            className="px-10 md:px-20 py-7 bg-white rounded shadow-md">
             <fieldset>
               <legend>
                 <h2 className="py-4 text-2xl md:text-3xl">
@@ -200,7 +200,7 @@ export const Register: React.VFC = () => {
           </form>
         )}
       />
-      <div className="mt-10 px-10 md:px-20 py-5 bg-white rounded shadow">
+      <div className="mt-10 px-10 md:px-20 py-5 bg-white rounded shadow-md">
         <div className="text-lg">
           Already registered?{' '}
           <Link href="/login">
