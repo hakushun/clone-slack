@@ -1,29 +1,22 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Field } from 'react-final-form';
+import { useAuth } from '../../../lib/firebase/useAuth';
 import {
   composeValidators,
   isEmail,
   isRequired,
 } from '../../../lib/validations';
-import firebase from '../../../lib/firebase/firebase';
 
+export type LoginPayload = {
+  email: string;
+  password: string;
+};
 export const Login: React.VFC = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isLoading, signIn } = useAuth();
 
-  const handleOnSubmit = async (values: any) => {
-    setIsLoading(true);
-    const { email, password } = values;
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      router.push('/');
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
+  const handleOnSubmit = async (values: LoginPayload) => {
+    await signIn(values);
   };
 
   return (
