@@ -9,6 +9,7 @@ module.exports = {
       backgroundColor: ['active', 'disabled'],
       cursor: ['disabled'],
       borderColor: ['disabled'],
+      margin: ['first'],
     },
   },
   plugins: [],
