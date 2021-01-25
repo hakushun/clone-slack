@@ -6,7 +6,7 @@ export const MessagesHeader: React.VFC = () => {
   const currentChannel = useSelector(selectChannel);
 
   return (
-    <div className="flex items-center justify-between py-3 px-5 rounded shadow-md border border-gray-200 bg-gray-100">
+    <div className="flex items-center justify-between py-3 px-5 rounded shadow-md border border-gray-200 bg-white">
       <div className="flex-auto">
         <h2 className="text-2xl">
           <strong>{currentChannel.name}</strong>
