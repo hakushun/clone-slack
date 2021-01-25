@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { selectUser } from '../../redux/modules/user';
-import { useAuth } from '../../lib/firebase/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { toggleChannelForm } from '../../redux/modules/modal';
 import { ChannelForm } from '../ChannelForm';
 import {

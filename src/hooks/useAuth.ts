@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import md5 from 'md5';
-import firebase from './firebase';
-import { RegisterPayload } from '../../components/Auth/Register';
-import { createUser } from './database';
-import { LoginPayload } from '../../components/Auth/Login';
-import { logoutUser } from '../../redux/modules/user';
+import firebase from '../lib/firebase/firebase';
+import { RegisterPayload } from '../components/Auth/Register';
+import { createUser } from '../lib/firebase/database';
+import { LoginPayload } from '../components/Auth/Login';
+import { logoutUser } from '../redux/modules/user';
 
 type UseAuthType = () => {
   isLoading: boolean;

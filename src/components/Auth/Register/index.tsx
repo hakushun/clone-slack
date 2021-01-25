@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { useAuth } from '../../../lib/firebase/useAuth';
+import { useAuth } from '../../../hooks/useAuth';
 import {
   composeValidators,
   isEmail,
