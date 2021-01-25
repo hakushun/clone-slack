@@ -5,5 +5,6 @@ export type Message = {
     username: string;
     avatarURL: string;
   };
-  content: string;
+  content?: string;
+  imageURL?: string;
 };
