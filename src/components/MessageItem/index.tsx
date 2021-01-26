@@ -21,7 +21,7 @@ export const MessageItem: React.VFC<Props> = ({ messages }) => (
           <span className="ml-3 text-sm text-gray-500">
             {getTimeFromNow(message.timestamp)}
           </span>
-          <div>{message.content}</div>
+          <div>{message.content || <img src={message.imageURL} alt="" />}</div>
         </div>
       </li>
     ))}
