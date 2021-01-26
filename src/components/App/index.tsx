@@ -2,6 +2,7 @@ import React from 'react';
 import { withAuth } from '../../helpers/withAuth';
 import { ColorPanel } from '../ColorPanel';
 import { Messages } from '../Messages';
+import { MetaInfo } from '../MetaInfo';
 import { SideMenu } from '../SideMenu';
 
 export const Component: React.VFC = () => (
@@ -10,7 +11,7 @@ export const Component: React.VFC = () => (
     <div className="grid grid-cols-5 h-screen flex-auto">
       <SideMenu />
       <Messages />
-      <aside className="bg-blue-100">Meta</aside>
+      <MetaInfo />
     </div>
   </div>
 );
