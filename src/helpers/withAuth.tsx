@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import firebase from '../lib/firebase/firebase';
 import { authUser, selectIsAuth } from '../redux/modules/user';
 import { mapUserData } from '../lib/firebase/mapUserData';
+import { PageLoader } from '../components/PageLoader';
 
 export const withAuth = (Component: React.FC): React.FC => (
   props: any,
@@ -28,5 +29,5 @@ export const withAuth = (Component: React.FC): React.FC => (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <>{!isAuth ? <div>Loading...</div> : <Component {...props} />}</>;
+  return <>{!isAuth ? <PageLoader /> : <Component {...props} />}</>;
 };
