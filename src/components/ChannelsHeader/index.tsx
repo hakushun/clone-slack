@@ -13,7 +13,7 @@ export const ChannelsHeader: React.VFC = () => {
   return (
     <div className="flex items-center justify-between p-3">
       <div className="flex">
-        <img src="/images/switch.svg" alt="" width="24" />
+        <img src="/images/switch.svg" alt="" width="24" className="w-6 mr-2" />
         <span>CHANNELS ({channels.length})</span>
       </div>
       <button type="button" onClick={openChannelForm}>
