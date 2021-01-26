@@ -27,7 +27,7 @@ export const MessageList: React.VFC = () => {
   }, [currentChannel.id, dispatch]);
 
   return (
-    <div className="flex-auto overflow-y-scroll bg-gray-100 rounded shadow-md border border-gray-200 px-3 py-5">
+    <div className="flex-auto overflow-y-scroll bg-gray-50 rounded shadow-md border border-gray-200 px-3 py-5">
       <ul>
         <MessageItem messages={messages} />
       </ul>
