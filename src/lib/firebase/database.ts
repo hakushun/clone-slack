@@ -12,8 +12,9 @@ export const createUser = async (
 ): Promise<void> => {
   if (!userCredential.user) throw new Error('failure to create user');
   await usersRef.child(userCredential.user.uid).set({
-    name: userCredential.user.displayName,
-    avatar: userCredential.user.photoURL,
+    id: userCredential.user.uid,
+    username: userCredential.user.displayName,
+    avatarURL: userCredential.user.photoURL,
   });
 };
 
