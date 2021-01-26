@@ -1,6 +1,6 @@
 import React from 'react';
 import { getTimeFromNow } from '../../lib/date';
-import { Message } from '../../redux/modules/message';
+import { Message } from '../../redux/modules/messages';
 
 type Props = {
   messages: Message[];

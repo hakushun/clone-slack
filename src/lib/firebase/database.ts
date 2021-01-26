@@ -1,4 +1,4 @@
-import { Message } from '../../redux/modules/message';
+import { Message } from '../../redux/modules/messages';
 import { User } from '../../redux/modules/user';
 import { getTimestamp } from '../date';
 import firebase from './firebase';

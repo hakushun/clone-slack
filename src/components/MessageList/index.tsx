@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { messagesRef } from '../../lib/firebase/database';
 import { selectChannel } from '../../redux/modules/channel';
-import { Message } from '../../redux/modules/message';
-import { selectMessages, setMessages } from '../../redux/modules/messages';
+import { Message, selectMessages, setMessages } from '../../redux/modules/messages';
 import { MessageItem } from '../MessageItem';
 
 export const MessageList: React.VFC = () => {

@@ -2,8 +2,17 @@ import actionCreatorFactory from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { createSelector } from 'reselect';
 import { RootState } from './reducers';
-import { Message } from './message';
 
+export type Message = {
+  timestamp: number;
+  user: {
+    id: string;
+    username: string;
+    avatarURL: string;
+  };
+  content?: string;
+  imageURL?: string;
+};
 export type Messages = Message[];
 
 const actionCreator = actionCreatorFactory();
