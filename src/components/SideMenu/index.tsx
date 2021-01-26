@@ -9,6 +9,7 @@ import { channelsRef } from '../../lib/firebase/database';
 import { SideMenuHeader } from '../SideMenuHeader';
 import { Channels } from '../Channels';
 import { AccountInfo } from '../AccountInfo';
+import { DirectMessages } from '../DirectMessages';
 
 export const SideMenu: React.VFC = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export const SideMenu: React.VFC = () => {
       <AccountInfo />
       <Channels />
       <ChannelForm />
+      <DirectMessages />
     </section>
   );
 };
