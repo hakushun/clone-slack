@@ -1,9 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectChannel } from '../../redux/modules/channel';
+import { searchMessage } from '../../redux/modules/search';
 
 export const MessagesHeader: React.VFC = () => {
+  const dispatch = useDispatch();
   const currentChannel = useSelector(selectChannel);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(searchMessage({ search: e.target.value }));
+  };
 
   return (
     <div className="flex items-center justify-between py-3 px-5 rounded shadow-md border border-gray-200 bg-white">
@@ -25,6 +31,7 @@ export const MessagesHeader: React.VFC = () => {
             type="text"
             name="search"
             placeholder="Search Messages"
+            onChange={handleChange}
             className="flex-auto text-md py-1 px-2 outline-none rounded"
           />
         </div>
