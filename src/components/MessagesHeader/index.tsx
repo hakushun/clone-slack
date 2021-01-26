@@ -1,14 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectChannel } from '../../redux/modules/channel';
+import { selectJoinedUsers } from '../../redux/modules/messages';
 import { searchMessage } from '../../redux/modules/search';
 
 export const MessagesHeader: React.VFC = () => {
   const dispatch = useDispatch();
   const currentChannel = useSelector(selectChannel);
+  const joinedUsers = useSelector(selectJoinedUsers);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(searchMessage({ search: e.target.value }));
+  };
+
+  const countJointedUsers = (): string => {
+    if (joinedUsers.length === 1) return '1 User';
+    return `${joinedUsers.length} Users`;
   };
 
   return (
@@ -17,7 +24,7 @@ export const MessagesHeader: React.VFC = () => {
         <h2 className="text-2xl">
           <strong>{currentChannel.name}</strong>
         </h2>
-        <span className="text-sm text-gray-600">Number Users</span>
+        <span className="text-sm text-gray-600">{countJointedUsers()}</span>
       </div>
       <div>
         <div className="flex items-center border border-gray-500 rounded focus-within:ring-blue-500 focus-within:ring-1">
