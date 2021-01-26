@@ -23,6 +23,32 @@ const reducer = reducerWithInitialState(INITIAL_STATE).case(
 export default reducer;
 
 export const selectMessages = createSelector(
+  [
+    (state: RootState) => state.resources.messages.messages,
+    (state: RootState) => state.ui.search.search,
+  ],
+  (messages, search) => {
+    if (search === '') return messages;
+    const regex = new RegExp(search, 'gi');
+    return messages.reduce((acc: Message[], message) => {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.user.username.match(regex)
+      ) {
+        acc.push(message);
+      }
+      return acc;
+    }, []);
+  },
+);
+
+export const selectJoinedUsers = createSelector(
   [(state: RootState) => state.resources.messages.messages],
-  (messages) => messages,
+  (messages) =>
+    messages.reduce((acc: string[], message) => {
+      if (!acc.includes(message.user.username)) {
+        acc.push(message.user.username);
+      }
+      return acc;
+    }, []),
 );
