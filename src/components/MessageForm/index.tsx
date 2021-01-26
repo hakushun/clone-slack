@@ -27,7 +27,11 @@ export const MessageForm: React.VFC = () => {
     const message = generateMessage(user, { content: values.message });
 
     try {
-      await messagesRef.child(currentChannel.id).push().set(message);
+      const key = messagesRef.child(currentChannel.id).push().key as string;
+      await messagesRef
+        .child(currentChannel.id)
+        .child(key)
+        .set({ ...message, id: key });
       values.message = '';
     } catch (error) {
       console.log(error);

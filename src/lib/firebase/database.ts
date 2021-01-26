@@ -27,6 +27,7 @@ export const generateMessage = (
   value: MessageValueType,
 ): Message => {
   const message = {
+    id: '',
     timestamp: getTimestamp(),
     user: {
       id: user.id,

@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { RootState } from './reducers';
 
 export type Message = {
+  id: string;
   timestamp: number;
   user: {
     id: string;
