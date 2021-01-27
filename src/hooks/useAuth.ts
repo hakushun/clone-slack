@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import md5 from 'md5';
 import firebase from '../lib/firebase/firebase';
 import { RegisterPayload } from '../components/Auth/Register';
-import { createUser } from '../lib/firebase/database';
 import { LoginPayload } from '../components/Auth/Login';
 import { logoutUser } from '../redux/modules/user';
+import { useUser } from './useUser';
 
 type UseAuthType = () => {
   isLoading: boolean;
@@ -19,6 +19,7 @@ export const useAuth: UseAuthType = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { createUser } = useUser();
 
   const signUp = async (values: RegisterPayload) => {
     setIsLoading(true);

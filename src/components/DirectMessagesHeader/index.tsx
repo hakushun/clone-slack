@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectUsers } from '../../redux/modules/users';
+import { useUser } from '../../hooks/useUser';
 
 export const DirectMessagesHeader: React.VFC = () => {
-  const users = useSelector(selectUsers);
+  const { users } = useUser();
 
   return (
     <div className="flex items-center p-3">

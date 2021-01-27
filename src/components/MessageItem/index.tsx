@@ -1,16 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useUser } from '../../hooks/useUser';
 import { getTimeFromNow } from '../../lib/date';
 import { messagesRef } from '../../lib/firebase/database';
 import { selectChannel } from '../../redux/modules/channel';
 import { Message } from '../../redux/modules/messages';
-import { selectUser } from '../../redux/modules/user';
 
 type Props = {
   messages: Message[];
 };
 export const MessageItem: React.VFC<Props> = ({ messages }) => {
-  const currentUser = useSelector(selectUser);
   const currentChannel = useSelector(selectChannel);
 
   const handleRemove = (id: string) => {
@@ -20,6 +19,7 @@ export const MessageItem: React.VFC<Props> = ({ messages }) => {
       console.log(error);
     }
   };
+  const { currentUser } = useUser();
 
   return (
     <>

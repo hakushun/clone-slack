@@ -1,16 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
-import { selectUser } from '../../redux/modules/user';
+import { useUser } from '../../hooks/useUser';
 
 export const AccountMenu: React.VFC = () => {
   const { signOut } = useAuth();
-  const user = useSelector(selectUser);
+  const { currentUser } = useUser();
 
   return (
     <div className="absolute flex flex-col justify-center w-full py-2 px-3 rounded-xl bg-white text-gray-900">
       <span className="py-2 text-center">
-        Signed in as <strong>{user.username}</strong>
+        Signed in as <strong>{currentUser.username}</strong>
       </span>
       <button
         type="button"
