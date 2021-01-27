@@ -1,21 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectChannel,
-  Channel,
-  focusChannel,
-} from '../../redux/modules/channel';
-import { selectChannels } from '../../redux/modules/channels';
+import { useChannel } from '../../hooks/useChannel';
 
 export const ChannelList: React.VFC = () => {
-  const dispatch = useDispatch();
-  const currentChannel = useSelector(selectChannel);
-  const channels = useSelector(selectChannels);
-
-  const handleFocus = (channel: Channel) => {
-    dispatch(focusChannel(channel));
-  };
+  const { currentChannel, channels, handleFocus } = useChannel();
 
   return (
     <ul className="flex flex-col justify-center">

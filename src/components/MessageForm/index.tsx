@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateMessage, messagesRef } from '../../lib/firebase/database';
+import { useChannel } from '../../hooks/useChannel';
 import { isRequired } from '../../lib/validations';
-import { selectChannel } from '../../redux/modules/channel';
 import { toggleUploadMediaForm } from '../../redux/modules/modal';
 import { selectUser } from '../../redux/modules/user';
 import { UploadMediaForm } from '../UploadMediaForm';
@@ -14,7 +14,6 @@ type MessageFormType = {
 };
 export const MessageForm: React.VFC = () => {
   const dispatch = useDispatch();
-  const currentChannel = useSelector(selectChannel);
   const user = useSelector(selectUser);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -39,6 +38,7 @@ export const MessageForm: React.VFC = () => {
       setIsLoading(false);
     }
   };
+  const { currentChannel } = useChannel();
 
   return (
     <div className="bg-gray-50 rounded shadow-md border border-gray-200 px-3 py-5">

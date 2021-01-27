@@ -1,15 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectChannels } from '../../redux/modules/channels';
-import { toggleChannelForm } from '../../redux/modules/modal';
+import { useChannel } from '../../hooks/useChannel';
 
 export const ChannelsHeader: React.VFC = () => {
-  const dispatch = useDispatch();
-  const channels = useSelector(selectChannels);
+  const { channels, openChannelForm } = useChannel();
 
-  const openChannelForm = () => {
-    dispatch(toggleChannelForm(true));
-  };
   return (
     <div className="flex items-center justify-between p-3">
       <div className="flex">

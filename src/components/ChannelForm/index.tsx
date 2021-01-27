@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Form, Field } from 'react-final-form';
-import {
-  selectChannelForm,
-  toggleChannelForm,
-} from '../../redux/modules/modal';
 import { Overlay } from '../Overlay';
 import {
   composeValidators,
@@ -12,48 +7,10 @@ import {
   minValue,
   mxaValue,
 } from '../../lib/validations';
-import { selectUser } from '../../redux/modules/user';
-import { channelsRef } from '../../lib/firebase/database';
-
-type ChannelFormType = {
-  name: string;
-  description: string;
-};
+import { useChannel } from '../../hooks/useChannel';
 
 export const ChannelForm: React.VFC = () => {
-  const dispatch = useDispatch();
-  const isOpened = useSelector(selectChannelForm);
-  const user = useSelector(selectUser);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleOnSubmit = async (values: ChannelFormType) => {
-    setIsLoading(true);
-    const { name, description } = values;
-    const { key } = channelsRef.push();
-
-    const newChannel = {
-      id: key,
-      name,
-      description: description || '',
-      createdBy: {
-        username: user.username,
-        avatarURL: user.avatarURL,
-      },
-    };
-
-    try {
-      await channelsRef.child(key!).update(newChannel);
-      dispatch(toggleChannelForm(false));
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
-  };
-
-  const closeForm = () => {
-    dispatch(toggleChannelForm(false));
-  };
+  const { isOpened, isLoading, createChannel, closeChannelForm } = useChannel();
 
   return (
     <>
@@ -61,7 +18,7 @@ export const ChannelForm: React.VFC = () => {
         <Overlay>
           <div className="w-full max-w-lg bg-white rounded-lg relative px-6 py-4">
             <Form
-              onSubmit={handleOnSubmit}
+              onSubmit={createChannel}
               initialValues={{}}
               subscription={{ pristine: true }}
               render={({ handleSubmit, pristine }) => (
@@ -173,7 +130,7 @@ export const ChannelForm: React.VFC = () => {
             />
             <button
               type="button"
-              onClick={closeForm}
+              onClick={closeChannelForm}
               className="absolute top-3 right-3">
               <img src="/images/x.svg" alt="close modal" width="28" />
             </button>
