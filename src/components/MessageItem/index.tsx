@@ -1,25 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useMessage } from '../../hooks/useMessage';
 import { useUser } from '../../hooks/useUser';
 import { getTimeFromNow } from '../../lib/date';
-import { messagesRef } from '../../lib/firebase/database';
-import { selectChannel } from '../../redux/modules/channel';
 import { Message } from '../../redux/modules/messages';
 
 type Props = {
   messages: Message[];
 };
 export const MessageItem: React.VFC<Props> = ({ messages }) => {
-  const currentChannel = useSelector(selectChannel);
-
-  const handleRemove = (id: string) => {
-    try {
-      messagesRef.child(currentChannel.id).child(id).remove();
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const { currentUser } = useUser();
+  const { removeMessage } = useMessage();
 
   return (
     <>
@@ -46,7 +36,7 @@ export const MessageItem: React.VFC<Props> = ({ messages }) => {
           {currentUser.id === message.user.id && (
             <button
               type="button"
-              onClick={() => handleRemove(message.id)}
+              onClick={() => removeMessage(message.id)}
               className="absolute top-1 right-1 ml-auto inline-block p-1">
               <img
                 src="/images/trash.svg"

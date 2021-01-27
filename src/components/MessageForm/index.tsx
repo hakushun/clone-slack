@@ -1,49 +1,21 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { generateMessage, messagesRef } from '../../lib/firebase/database';
 import { useChannel } from '../../hooks/useChannel';
+import { useMedia } from '../../hooks/useMedia';
+import { useMessage } from '../../hooks/useMessage';
 import { isRequired } from '../../lib/validations';
-import { toggleUploadMediaForm } from '../../redux/modules/modal';
-import { selectUser } from '../../redux/modules/user';
 import { UploadMediaForm } from '../UploadMediaForm';
 
-type MessageFormType = {
-  message: string;
-};
 export const MessageForm: React.VFC = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const openUploadMediaForm = () => {
-    dispatch(toggleUploadMediaForm(true));
-  };
-
-  const handleOnSubmit = async (values: MessageFormType) => {
-    setIsLoading(true);
-    const message = generateMessage(user, { content: values.message });
-
-    try {
-      const key = messagesRef.child(currentChannel.id).push().key as string;
-      await messagesRef
-        .child(currentChannel.id)
-        .child(key)
-        .set({ ...message, id: key });
-      values.message = '';
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   const { currentChannel } = useChannel();
+  const { isLoading, createMessage } = useMessage();
+  const { openUploadMediaForm } = useMedia();
 
   return (
     <div className="bg-gray-50 rounded shadow-md border border-gray-200 px-3 py-5">
       <Form
-        onSubmit={handleOnSubmit}
+        onSubmit={createMessage}
         initialValues={{ message: '' }}
         subscription={{ pristine: true }}
         render={({ handleSubmit, pristine }) => (

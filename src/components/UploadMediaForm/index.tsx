@@ -1,58 +1,22 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectChannel } from '../../redux/modules/channel';
-import {
-  selectUploadMediaForm,
-  toggleUploadMediaForm,
-} from '../../redux/modules/modal';
+import React from 'react';
 import { Overlay } from '../Overlay';
-import {
-  getDownloadURL,
-  uploadMediaToStorage,
-} from '../../lib/firebase/storage';
-import { selectUser } from '../../redux/modules/user';
-import { generateMessage, messagesRef } from '../../lib/firebase/database';
+import { useMedia } from '../../hooks/useMedia';
 
 export const UploadMediaForm: React.VFC = () => {
-  const dispatch = useDispatch();
-  const isOpened = useSelector(selectUploadMediaForm);
-  const user = useSelector(selectUser);
-  const currentChannel = useSelector(selectChannel);
-  const [media, setMedia] = useState<File | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (!media) return;
-    e.preventDefault();
-
-    try {
-      const uploadTask = await uploadMediaToStorage(media);
-      const downloadURL = await getDownloadURL(uploadTask);
-      const message = generateMessage(user, { imageURL: downloadURL });
-      await messagesRef.child(currentChannel.id).push().set(message);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setMedia(null);
-      dispatch(toggleUploadMediaForm(false));
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    setMedia(file);
-  };
-
-  const closeForm = () => {
-    dispatch(toggleUploadMediaForm(false));
-    setMedia(null);
-  };
+  const {
+    media,
+    isOpened,
+    handleChangeMedia,
+    createMessagewithMedia,
+    closeUploadMediaForm,
+  } = useMedia();
 
   return (
     <>
       {isOpened && (
         <Overlay>
           <div className="w-full max-w-lg bg-white rounded-lg relative px-6 py-4">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={createMessagewithMedia}>
               <fieldset>
                 <legend>
                   <h2 className="text-xl md:text-2xl font-bold">
@@ -65,7 +29,7 @@ export const UploadMediaForm: React.VFC = () => {
                     name="media"
                     type="file"
                     accept="image/*"
-                    onChange={handleChange}
+                    onChange={handleChangeMedia}
                     className="hidden"
                   />
                   <label
@@ -95,7 +59,7 @@ export const UploadMediaForm: React.VFC = () => {
             </form>
             <button
               type="button"
-              onClick={closeForm}
+              onClick={closeUploadMediaForm}
               className="absolute top-3 right-3">
               <img src="/images/x.svg" alt="close modal" width="28" />
             </button>
