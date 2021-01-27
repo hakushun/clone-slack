@@ -15,16 +15,12 @@ export type LoginPayload = {
 export const Login: React.VFC = () => {
   const { isLoading, signIn } = useAuth();
 
-  const handleOnSubmit = async (values: LoginPayload) => {
-    await signIn(values);
-  };
-
   return (
     <section
       id="login"
       className="w-full h-screen px-4 flex flex-col justify-center items-center bg-purple-100">
       <Form
-        onSubmit={handleOnSubmit}
+        onSubmit={signIn}
         initialValues={{}}
         subscription={{ pristine: true }}
         render={({ handleSubmit, pristine }) => (

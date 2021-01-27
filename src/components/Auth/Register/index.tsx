@@ -18,16 +18,12 @@ export type RegisterPayload = {
 export const Register: React.VFC = () => {
   const { isLoading, signUp } = useAuth();
 
-  const handleOnSubmit = async (values: RegisterPayload) => {
-    await signUp(values);
-  };
-
   return (
     <section
       id="register"
       className="w-full h-screen px-4 flex flex-col justify-center items-center bg-purple-100">
       <Form
-        onSubmit={handleOnSubmit}
+        onSubmit={signUp}
         initialValues={{}}
         subscription={{ pristine: true }}
         render={({ handleSubmit, pristine }) => (
