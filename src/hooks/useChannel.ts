@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { channelsRef } from '../lib/firebase/database';
-import { Channel, focusChannel, selectChannel } from '../redux/modules/channel';
+import {
+  Channel,
+  focusPrivateChannel,
+  focusPublicChannel,
+  selectChannel,
+} from '../redux/modules/channel';
 import {
   Channels,
   selectChannels,
@@ -10,6 +15,7 @@ import {
 import { selectJoinedUsers } from '../redux/modules/messages';
 import { selectChannelForm, toggleChannelForm } from '../redux/modules/modal';
 import { selectUser } from '../redux/modules/user';
+import { UserInfo } from '../redux/modules/users';
 
 type ChannelFormType = {
   name: string;
@@ -22,14 +28,15 @@ type UserChannelType = () => {
   isLoading: boolean;
   openChannelForm: () => void;
   closeChannelForm: () => void;
-  handleFocus: (_channel: Channel) => void;
+  handleFocusPublicChannel: (_channel: Channel) => void;
+  handleFocusPrivateChannel: (_user: UserInfo) => void;
   createChannel: (_values: ChannelFormType) => Promise<void>;
   countJointedUsers: () => string;
 };
 
 export const useChannel: UserChannelType = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
   const currentChannel = useSelector(selectChannel);
   const channels = useSelector(selectChannels);
   const joinedUsers = useSelector(selectJoinedUsers);
@@ -57,8 +64,21 @@ export const useChannel: UserChannelType = () => {
     dispatch(toggleChannelForm(false));
   };
 
-  const handleFocus = (channel: Channel) => {
-    dispatch(focusChannel(channel));
+  const handleFocusPublicChannel = (channel: Channel) => {
+    dispatch(focusPublicChannel(channel));
+  };
+
+  const getChannelId = (userId: string) =>
+    userId < currentUser.id
+      ? `${userId}/${currentUser.id}`
+      : `${currentUser.id}/${userId}`;
+
+  const handleFocusPrivateChannel = (user: UserInfo) => {
+    const channel = {
+      id: getChannelId(user.id),
+      name: user.username,
+    };
+    dispatch(focusPrivateChannel(channel));
   };
 
   const createChannel = async (values: ChannelFormType) => {
@@ -71,8 +91,8 @@ export const useChannel: UserChannelType = () => {
       name,
       description: description || '',
       createdBy: {
-        username: user.username,
-        avatarURL: user.avatarURL,
+        username: currentUser.username,
+        avatarURL: currentUser.avatarURL,
       },
     };
 
@@ -98,7 +118,8 @@ export const useChannel: UserChannelType = () => {
     isLoading,
     openChannelForm,
     closeChannelForm,
-    handleFocus,
+    handleFocusPublicChannel,
+    handleFocusPrivateChannel,
     createChannel,
     countJointedUsers,
   };
