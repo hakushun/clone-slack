@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimestamp } from '../lib/date';
-import { messagesRef } from '../lib/firebase/database';
-import { selectChannel } from '../redux/modules/channel';
+import { messagesRef, privateMessagesRef } from '../lib/firebase/database';
+import { selectChannel, selectIsPrivate } from '../redux/modules/channel';
 import {
   selectMessages,
   Message,
@@ -26,13 +26,16 @@ type UseMessageType = () => {
 export const useMessage: UseMessageType = () => {
   const dispatch = useDispatch();
   const currentChannel = useSelector(selectChannel);
+  const isPrivate = useSelector(selectIsPrivate);
   const messages = useSelector(selectMessages);
   const currentUser = useSelector(selectUser);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const ref = isPrivate ? privateMessagesRef : messagesRef;
+
   useEffect(() => {
     if (currentChannel.id) {
-      messagesRef.child(currentChannel.id).on('value', (snapshots) => {
+      ref.child(currentChannel.id).on('value', (snapshots) => {
         const loadedMessages: Message[] = [];
         snapshots.forEach((snapshot) => {
           loadedMessages.push(snapshot.val());
@@ -41,9 +44,9 @@ export const useMessage: UseMessageType = () => {
       });
     }
     return () => {
-      messagesRef.off();
+      ref.off();
     };
-  }, [currentChannel.id, dispatch]);
+  }, [currentChannel.id, dispatch, ref]);
 
   const generateMessage = (user: User, value: MessageValueType): Message => {
     const message = {
@@ -64,8 +67,8 @@ export const useMessage: UseMessageType = () => {
     const message = generateMessage(currentUser, { content: values.message });
 
     try {
-      const key = messagesRef.child(currentChannel.id).push().key as string;
-      await messagesRef
+      const key = ref.child(currentChannel.id).push().key as string;
+      await ref
         .child(currentChannel.id)
         .child(key)
         .set({ ...message, id: key });
@@ -79,7 +82,7 @@ export const useMessage: UseMessageType = () => {
 
   const removeMessage = (id: string) => {
     try {
-      messagesRef.child(currentChannel.id).child(id).remove();
+      ref.child(currentChannel.id).child(id).remove();
     } catch (error) {
       console.log(error);
     }
