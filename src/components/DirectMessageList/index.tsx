@@ -1,8 +1,11 @@
 import React from 'react';
+import clsx from 'clsx';
+import { useChannel } from '../../hooks/useChannel';
 import { useUser } from '../../hooks/useUser';
 
 export const DirectMessageList: React.VFC = () => {
   const { users } = useUser();
+  const { currentChannel, handleFocusPrivateChannel } = useChannel();
 
   return (
     <ul className="flex flex-col justify-center">
@@ -10,7 +13,13 @@ export const DirectMessageList: React.VFC = () => {
         <li key={user.id}>
           <button
             type="button"
-            className="flex justify-between items-center w-full px-3 py-1 text-left hover:bg-pink-600">
+            onClick={() => handleFocusPrivateChannel(user)}
+            className={clsx(
+              'flex justify-between items-center w-full px-3 py-1 text-left hover:bg-pink-600',
+              currentChannel.isPrivate &&
+                currentChannel.name === user.username &&
+                'bg-pink-700',
+            )}>
             <span className="flex-auto">@ {user.username}</span>
             {user.online ? (
               <img

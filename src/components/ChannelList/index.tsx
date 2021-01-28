@@ -3,7 +3,7 @@ import React from 'react';
 import { useChannel } from '../../hooks/useChannel';
 
 export const ChannelList: React.VFC = () => {
-  const { currentChannel, channels, handleFocus } = useChannel();
+  const { currentChannel, channels, handleFocusPublicChannel } = useChannel();
 
   return (
     <ul className="flex flex-col justify-center">
@@ -15,7 +15,7 @@ export const ChannelList: React.VFC = () => {
               'w-full px-3 py-1 text-left hover:bg-pink-600',
               currentChannel.id === channel.id && 'bg-pink-700',
             )}
-            onClick={() => handleFocus(channel)}>
+            onClick={() => handleFocusPublicChannel(channel)}>
             # {channel.name}
           </button>
         </li>
