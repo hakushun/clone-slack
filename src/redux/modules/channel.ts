@@ -11,7 +11,7 @@ export type Channel = {
     username: string;
     avatarURL: string;
   };
-  isPrivate?: boolean;
+  isPrivate: boolean;
 };
 
 const actionCreator = actionCreatorFactory();
