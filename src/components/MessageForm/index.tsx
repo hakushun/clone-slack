@@ -8,7 +8,7 @@ import { isRequired } from '../../lib/validations';
 import { UploadMediaForm } from '../UploadMediaForm';
 
 export const MessageForm: React.VFC = () => {
-  const { currentChannel } = useChannel();
+  const { currentChannel, isPrivate } = useChannel();
   const { isLoading, createMessage } = useMessage();
   const { openUploadMediaForm } = useMedia();
 
@@ -42,7 +42,9 @@ export const MessageForm: React.VFC = () => {
                     />
                   </button>
                   <input
-                    placeholder={`Message #${currentChannel.name}`}
+                    placeholder={`Message ${isPrivate ? '@' : '#'}${
+                      currentChannel.name
+                    }`}
                     autoComplete="off"
                     required
                     aria-required
