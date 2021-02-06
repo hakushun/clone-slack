@@ -6,6 +6,7 @@ import {
   focusPrivateChannel,
   focusPublicChannel,
   selectChannel,
+  selectIsPrivate,
 } from '../redux/modules/channel';
 import {
   Channels,
@@ -25,6 +26,7 @@ type UserChannelType = () => {
   currentChannel: Channel;
   channels: Channels;
   isOpened: boolean;
+  isPrivate: boolean;
   isLoading: boolean;
   openChannelForm: () => void;
   closeChannelForm: () => void;
@@ -41,6 +43,7 @@ export const useChannel: UserChannelType = () => {
   const channels = useSelector(selectChannels);
   const joinedUsers = useSelector(selectJoinedUsers);
   const isOpened = useSelector(selectChannelForm);
+  const isPrivate = useSelector(selectIsPrivate);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -115,6 +118,7 @@ export const useChannel: UserChannelType = () => {
     currentChannel,
     channels,
     isOpened,
+    isPrivate,
     isLoading,
     openChannelForm,
     closeChannelForm,
