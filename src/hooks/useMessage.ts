@@ -49,8 +49,10 @@ export const useMessage: UseMessageType = () => {
   }, [currentChannel.id, dispatch, ref]);
 
   const generateMessage = (user: User, value: MessageValueType): Message => {
+    const key = ref.child(currentChannel.id).push().key as string;
+
     const message = {
-      id: '',
+      id: key,
       timestamp: getTimestamp(),
       user: {
         id: user.id,
@@ -67,11 +69,10 @@ export const useMessage: UseMessageType = () => {
     const message = generateMessage(currentUser, { content: values.message });
 
     try {
-      const key = ref.child(currentChannel.id).push().key as string;
       await ref
         .child(currentChannel.id)
-        .child(key)
-        .set({ ...message, id: key });
+        .child(message.id)
+        .set({ ...message });
       values.message = '';
     } catch (error) {
       console.log(error);
