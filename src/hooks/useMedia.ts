@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import mime from 'mime-types';
 import { v4 as uuidv4 } from 'uuid';
-import { messagesRef } from '../lib/firebase/database';
+import { messagesRef, privateMessagesRef } from '../lib/firebase/database';
 import { selectChannel, selectIsPrivate } from '../redux/modules/channel';
 import {
   selectUploadMediaForm,
@@ -34,6 +34,8 @@ export const useMedia: UseMediaType = () => {
   const [media, setMedia] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { generateMessage } = useMessage();
+
+  const ref = isPrivate ? privateMessagesRef : messagesRef;
 
   const handleChangeMedia = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -85,7 +87,7 @@ export const useMedia: UseMediaType = () => {
       const uploadTask = await uploadMediaToStorage(media);
       const downloadURL = await getDownloadURL(uploadTask);
       const message = generateMessage(currentUser, { imageURL: downloadURL });
-      await messagesRef.child(currentChannel.id).push().set(message);
+      await ref.child(currentChannel.id).child(message.id).set(message);
     } catch (error) {
       console.log(error);
     } finally {
