@@ -18,7 +18,7 @@ type UseMediaType = () => {
   isLoading: boolean;
   isOpened: boolean;
   handleChangeMedia: (_e: React.ChangeEvent<HTMLInputElement>) => void;
-  createMessagewithMedia: (
+  createMessageWithMedia: (
     _e: React.FormEvent<HTMLFormElement>,
   ) => Promise<void>;
   openUploadMediaForm: () => void;
@@ -75,7 +75,7 @@ export const useMedia: UseMediaType = () => {
     return result;
   };
 
-  const createMessagewithMedia = async (
+  const createMessageWithMedia = async (
     e: React.FormEvent<HTMLFormElement>,
   ) => {
     if (!media) return;
@@ -109,7 +109,7 @@ export const useMedia: UseMediaType = () => {
     isLoading,
     isOpened,
     handleChangeMedia,
-    createMessagewithMedia,
+    createMessageWithMedia,
     openUploadMediaForm,
     closeUploadMediaForm,
   };

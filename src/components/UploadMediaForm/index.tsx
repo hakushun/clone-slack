@@ -7,7 +7,7 @@ export const UploadMediaForm: React.VFC = () => {
     media,
     isOpened,
     handleChangeMedia,
-    createMessagewithMedia,
+    createMessageWithMedia,
     closeUploadMediaForm,
   } = useMedia();
 
@@ -16,7 +16,7 @@ export const UploadMediaForm: React.VFC = () => {
       {isOpened && (
         <Overlay>
           <div className="w-full max-w-lg bg-white rounded-lg relative px-6 py-4">
-            <form onSubmit={createMessagewithMedia}>
+            <form onSubmit={createMessageWithMedia}>
               <fieldset>
                 <legend>
                   <h2 className="text-xl md:text-2xl font-bold">
