@@ -1,19 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectMetaInfo, toggleMetaInfo } from '../../redux/modules/drawer';
-import { searchMessage } from '../../redux/modules/search';
+import { useSearch } from '../../hooks/useSearch';
+import { useToggleUI } from '../../hooks/useToggleUI';
 
 export const SearchMessages: React.VFC = () => {
-  const dispatch = useDispatch();
-  const metaInfoIsOpened = useSelector(selectMetaInfo);
+  const { handleToggleDrawer } = useToggleUI();
+  const { handleChange } = useSearch();
 
-  const handleToggleDrawer = () => {
-    dispatch(toggleMetaInfo(!metaInfoIsOpened));
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(searchMessage({ search: e.target.value }));
-  };
   return (
     <div className="flex items-center gap-3">
       <div className="flex items-center border border-gray-500 rounded focus-within:ring-blue-500 focus-within:ring-1">

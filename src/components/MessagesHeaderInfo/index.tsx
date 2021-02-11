@@ -1,16 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useChannel } from '../../hooks/useChannel';
-import { selectMetaInfo, toggleMetaInfo } from '../../redux/modules/drawer';
+import { useToggleUI } from '../../hooks/useToggleUI';
 
 export const MessagesHeaderInfo: React.VFC = () => {
   const { currentChannel, isPrivate, countJointedUsers } = useChannel();
-  const dispatch = useDispatch();
-  const metaInfoIsOpened = useSelector(selectMetaInfo);
-
-  const handleToggleDrawer = () => {
-    dispatch(toggleMetaInfo(!metaInfoIsOpened));
-  };
+  const { handleToggleDrawer } = useToggleUI();
 
   return (
     <div className="flex-auto">

@@ -1,15 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
-import { selectMetaInfo } from '../../redux/modules/drawer';
 import { MessageForm } from '../MessageForm';
 import { MessageList } from '../MessageList';
 import { MessagesHeader } from '../MessagesHeader';
 import { useChannel } from '../../hooks/useChannel';
+import { useToggleUI } from '../../hooks/useToggleUI';
 
 export const Messages: React.VFC = () => {
   const { currentChannel } = useChannel();
-  const metaInfoIsOpened = useSelector(selectMetaInfo);
+  const { metaInfoIsOpened } = useToggleUI();
 
   return (
     <section
