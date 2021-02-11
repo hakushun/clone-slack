@@ -80,6 +80,7 @@ export const useChannel: UserChannelType = () => {
     const channel = {
       id: getChannelId(user.id),
       name: user.username,
+      isPrivate: true,
     };
     dispatch(focusPrivateChannel(channel));
   };
