@@ -28,6 +28,7 @@ type UserChannelType = () => {
   isOpened: boolean;
   isPrivate: boolean;
   isLoading: boolean;
+  joinedUsers: UserInfo[];
   openChannelForm: () => void;
   closeChannelForm: () => void;
   handleFocusPublicChannel: (_channel: Channel) => void;
@@ -121,6 +122,7 @@ export const useChannel: UserChannelType = () => {
     isOpened,
     isPrivate,
     isLoading,
+    joinedUsers,
     openChannelForm,
     closeChannelForm,
     handleFocusPublicChannel,
