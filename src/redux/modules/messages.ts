@@ -2,6 +2,7 @@ import actionCreatorFactory from 'typescript-fsa';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { createSelector } from 'reselect';
 import { RootState } from './reducers';
+import { UserInfo } from './users';
 
 export type Message = {
   id: string;
@@ -55,9 +56,9 @@ export const selectMessages = createSelector(
 export const selectJoinedUsers = createSelector(
   [(state: RootState) => state.resources.messages.messages],
   (messages) =>
-    messages.reduce((acc: string[], message) => {
-      if (!acc.includes(message.user.username)) {
-        acc.push(message.user.username);
+    messages.reduce((acc: UserInfo[], message) => {
+      if (!acc.includes(message.user)) {
+        acc.push(message.user);
       }
       return acc;
     }, []),
