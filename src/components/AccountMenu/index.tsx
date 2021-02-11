@@ -1,10 +1,21 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../hooks/useAuth';
 import { useUser } from '../../hooks/useUser';
+import {
+  selectChangeAvatarForm,
+  toggleChangeAvatarForm,
+} from '../../redux/modules/modal';
+import { ChangeAvatarModal } from '../ChangeAvatarModal';
 
 export const AccountMenu: React.VFC = () => {
   const { signOut } = useAuth();
   const { currentUser } = useUser();
+  const dispatch = useDispatch();
+  const isOpened = useSelector(selectChangeAvatarForm);
+  const handleOpen = () => {
+    dispatch(toggleChangeAvatarForm(true));
+  };
 
   return (
     <div className="absolute flex flex-col justify-center w-full py-2 px-3 rounded-xl bg-white text-gray-900">
@@ -13,6 +24,7 @@ export const AccountMenu: React.VFC = () => {
       </span>
       <button
         type="button"
+        onClick={handleOpen}
         className="py-2 rounded hover:bg-gray-300 focus:bg-gray-300">
         Change Avatar
       </button>
@@ -22,6 +34,7 @@ export const AccountMenu: React.VFC = () => {
         onClick={signOut}>
         Sign Out
       </button>
+      {isOpened && <ChangeAvatarModal />}
     </div>
   );
 };
