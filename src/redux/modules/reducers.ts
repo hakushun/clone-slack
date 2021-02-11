@@ -3,6 +3,7 @@ import user from './user';
 import modal from './modal';
 import channel from './channel';
 import drawer from './drawer';
+import accordion from './accordion';
 import users from './users';
 import channels from './channels';
 import messages from './messages';
@@ -11,7 +12,7 @@ import search from './search';
 
 const rootReducer = combineReducers({
   resources: combineReducers({ users, channels, messages, presences }),
-  ui: combineReducers({ user, modal, channel, search, drawer }),
+  ui: combineReducers({ user, modal, channel, search, drawer, accordion }),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
