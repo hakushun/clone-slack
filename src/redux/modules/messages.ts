@@ -56,6 +56,7 @@ export const selectMessages = createSelector(
 export const selectJoinedUsers = createSelector(
   [(state: RootState) => state.resources.messages.messages],
   (messages) =>
+    // bug: avatarURLが違うと同一ユーザーでもpushされてしまう
     messages.reduce((acc: UserInfo[], message) => {
       if (!acc.includes(message.user)) {
         acc.push(message.user);

@@ -45,6 +45,7 @@ export const ChangeAvatarModal: React.VFC = () => {
       await firebase.auth().currentUser?.updateProfile({
         photoURL: downloadURL,
       });
+      // must: 変更をsubscribeしたい
       await usersRef.child(currentUser.id).update({ avatarURL: downloadURL });
       dispatch(toggleChangeAvatarForm(false));
     } catch (error) {
