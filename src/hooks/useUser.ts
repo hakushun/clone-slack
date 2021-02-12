@@ -49,7 +49,8 @@ export const useUser: UseUserType = () => {
       connectedRef.off();
       presenceRef.off();
     };
-  }, [dispatch, currentUser, isAuth]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const createUser = async (
     userCredential: firebase.auth.UserCredential,
