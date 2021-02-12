@@ -1,24 +1,30 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { connectedRef, presenceRef, usersRef } from '../lib/firebase/database';
-import { selectUser, User } from '../redux/modules/user';
+import { selectIsAuth, User } from '../redux/modules/user';
 import firebase from '../lib/firebase/firebase';
-import { selectUsers, setUsers, UserInfo } from '../redux/modules/users';
+import {
+  selectCurrentUser,
+  selectUsers,
+  setUsers,
+  UserInfo,
+} from '../redux/modules/users';
 import { setPresences } from '../redux/modules/presences';
 
 type UseUserType = () => {
-  currentUser: User;
+  currentUser: UserInfo | User;
   users: UserInfo[];
   createUser: (_userCredential: firebase.auth.UserCredential) => Promise<void>;
 };
 
 export const useUser: UseUserType = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(selectUser);
+  const currentUser = useSelector(selectCurrentUser);
+  const isAuth = useSelector(selectIsAuth);
   const users = useSelector(selectUsers);
 
   useEffect(() => {
-    if (currentUser.isAuth) {
+    if (isAuth) {
       usersRef.on('value', (snapshots) => {
         const loadedUsers: UserInfo[] = [];
         snapshots.forEach((snapshot) => {
@@ -28,7 +34,7 @@ export const useUser: UseUserType = () => {
       });
       connectedRef.on('value', (snapshot) => {
         if (snapshot.val() === true) {
-          const ref = presenceRef.child(currentUser.id);
+          const ref = presenceRef.child(currentUser!.id);
           ref.set(true);
           ref.onDisconnect().remove();
         }
@@ -43,7 +49,7 @@ export const useUser: UseUserType = () => {
       connectedRef.off();
       presenceRef.off();
     };
-  }, [dispatch, currentUser]);
+  }, [dispatch, currentUser, isAuth]);
 
   const createUser = async (
     userCredential: firebase.auth.UserCredential,

@@ -15,8 +15,7 @@ import {
 } from '../redux/modules/channels';
 import { selectJoinedUsers } from '../redux/modules/messages';
 import { selectChannelForm, toggleChannelForm } from '../redux/modules/modal';
-import { selectUser } from '../redux/modules/user';
-import { UserInfo } from '../redux/modules/users';
+import { selectCurrentUser, UserInfo } from '../redux/modules/users';
 
 type ChannelFormType = {
   name: string;
@@ -39,7 +38,7 @@ type UserChannelType = () => {
 
 export const useChannel: UserChannelType = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(selectUser);
+  const currentUser = useSelector(selectCurrentUser);
   const currentChannel = useSelector(selectChannel);
   const channels = useSelector(selectChannels);
   const joinedUsers = useSelector(selectJoinedUsers);

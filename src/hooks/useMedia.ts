@@ -8,10 +8,10 @@ import {
   selectUploadMediaForm,
   toggleUploadMediaForm,
 } from '../redux/modules/modal';
-import { selectUser } from '../redux/modules/user';
 import { useMessage } from './useMessage';
 import { storageRef } from '../lib/firebase/storage';
 import firebase from '../lib/firebase/firebase';
+import { selectCurrentUser } from '../redux/modules/users';
 
 type UseMediaType = () => {
   media: File | null;
@@ -29,7 +29,7 @@ export const useMedia: UseMediaType = () => {
   const dispatch = useDispatch();
   const currentChannel = useSelector(selectChannel);
   const isPrivate = useSelector(selectIsPrivate);
-  const currentUser = useSelector(selectUser);
+  const currentUser = useSelector(selectCurrentUser);
   const isOpened = useSelector(selectUploadMediaForm);
   const [media, setMedia] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -9,7 +9,8 @@ import {
   setMessages,
   Messages,
 } from '../redux/modules/messages';
-import { selectUser, User } from '../redux/modules/user';
+import { User } from '../redux/modules/user';
+import { selectCurrentUser, UserInfo } from '../redux/modules/users';
 
 type MessageFormType = {
   message: string;
@@ -18,7 +19,10 @@ type MessageValueType = { imageURL: string } | { content: string };
 type UseMessageType = () => {
   messages: Messages;
   isLoading: boolean;
-  generateMessage: (_user: User, _value: MessageValueType) => Message;
+  generateMessage: (
+    _user: UserInfo | User,
+    _value: MessageValueType,
+  ) => Message;
   createMessage: (_values: MessageFormType) => Promise<void>;
   removeMessage: (_id: string) => void;
 };
@@ -28,7 +32,7 @@ export const useMessage: UseMessageType = () => {
   const currentChannel = useSelector(selectChannel);
   const isPrivate = useSelector(selectIsPrivate);
   const messages = useSelector(selectMessages);
-  const currentUser = useSelector(selectUser);
+  const currentUser = useSelector(selectCurrentUser);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const ref = isPrivate ? privateMessagesRef : messagesRef;
@@ -48,7 +52,10 @@ export const useMessage: UseMessageType = () => {
     };
   }, [currentChannel.id, dispatch, ref]);
 
-  const generateMessage = (user: User, value: MessageValueType): Message => {
+  const generateMessage = (
+    user: UserInfo | User,
+    value: MessageValueType,
+  ): Message => {
     const key = ref.child(currentChannel.id).push().key as string;
 
     const message = {
