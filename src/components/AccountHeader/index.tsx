@@ -1,16 +1,15 @@
 import React from 'react';
+import { useToggleUI } from '../../hooks/useToggleUI';
 import { useUser } from '../../hooks/useUser';
 
-type Props = {
-  toggleMenu: () => void;
-};
-export const AccountHeader: React.VFC<Props> = ({ toggleMenu }) => {
+export const AccountHeader: React.VFC = () => {
   const { currentUser } = useUser();
+  const { handleToggleDropdown } = useToggleUI();
 
   return (
     <button
       className="w-full flex items-center justify-center px-3 py-3 border-b border-white"
-      onClick={toggleMenu}>
+      onClick={handleToggleDropdown}>
       <img
         src={currentUser.avatarURL}
         alt="your avatar"

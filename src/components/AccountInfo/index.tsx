@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useToggleUI } from '../../hooks/useToggleUI';
 import { AccountHeader } from '../AccountHeader';
 import { AccountMenu } from '../AccountMenu';
 
 export const AccountInfo: React.VFC = () => {
-  const [isOpend, setIsOpened] = useState<boolean>(false);
-
-  const toggleMenu = () => {
-    setIsOpened(!isOpend);
-  };
+  const { accountMenuIsOpened } = useToggleUI();
 
   return (
     <div className="relative">
