@@ -1,66 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AvatarEditor from 'react-avatar-editor';
-import { useDispatch } from 'react-redux';
-import { useUser } from '../../hooks/useUser';
-import { usersRef } from '../../lib/firebase/database';
-import firebase from '../../lib/firebase/firebase';
-import { storageRef } from '../../lib/firebase/storage';
-import { toggleChangeAvatarForm } from '../../redux/modules/modal';
+import { useAvatar } from '../../hooks/useAvatar';
 import { Overlay } from '../Overlay';
 
 export const ChangeAvatarModal: React.VFC = () => {
-  const dispatch = useDispatch();
-  const [image, setImage] = useState<File | null>(null);
-  const [editor, setEditor] = useState<AvatarEditor>();
-  const [croppedImage, setCroppedImage] = useState<string>('');
-  const [blob, setBlob] = useState<Blob | null>(null);
-  const { currentUser } = useUser();
-
-  const setEditorRef = (avatar: AvatarEditor) => setEditor(avatar);
-
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    setImage(file);
-  };
-
-  const handleCropImage = () => {
-    if (editor) {
-      editor.getImageScaledToCanvas().toBlob((blb) => {
-        setCroppedImage(URL.createObjectURL(blb));
-        setBlob(blb);
-      });
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (!image) return;
-    e.preventDefault();
-    try {
-      const snapshot = await storageRef
-        .child(`avatars/users/${currentUser.id}`)
-        .put(blob!, {
-          contentType: 'image/jpeg',
-        });
-      const downloadURL = (await snapshot.ref.getDownloadURL()) as string;
-      await firebase.auth().currentUser?.updateProfile({
-        photoURL: downloadURL,
-      });
-      // must: 変更をsubscribeしたい
-      await usersRef.child(currentUser.id).update({ avatarURL: downloadURL });
-      dispatch(toggleChangeAvatarForm(false));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleClose = () => {
-    dispatch(toggleChangeAvatarForm(false));
-  };
+  const {
+    image,
+    croppedImage,
+    setEditorRef,
+    handleChangeImage,
+    changeAvatar,
+    closeChangeAvatarForm,
+    handleCropImage,
+  } = useAvatar();
 
   return (
     <Overlay>
       <div className="w-full max-w-lg bg-white rounded-lg relative px-6 py-4">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={changeAvatar}>
           <fieldset>
             <legend>
               <h2 className="text-xl md:text-2xl font-bold">Change Avatar</h2>
@@ -126,7 +83,7 @@ export const ChangeAvatarModal: React.VFC = () => {
         </form>
         <button
           type="button"
-          onClick={handleClose}
+          onClick={closeChangeAvatarForm}
           className="absolute top-3 right-3">
           <img src="/images/x.svg" alt="close modal" width="28" />
         </button>
