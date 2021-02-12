@@ -42,3 +42,11 @@ export const selectUsers = createSelector(
       return user;
     }),
 );
+
+export const selectCurrentUser = createSelector(
+  [
+    (state: RootState) => state.resources.users.users,
+    (state: RootState) => state.ui.user,
+  ],
+  (users, user) => users.find((usr) => usr.id === user.id) || user,
+);
