@@ -26,6 +26,7 @@ export const DirectMessageList: React.VFC = () => {
                 src="/images/online.svg"
                 alt={`${user.username} is online`}
                 width="24"
+                height="24"
                 className="w-6 ml-2"
               />
             ) : (
@@ -33,6 +34,7 @@ export const DirectMessageList: React.VFC = () => {
                 src="/images/offline.svg"
                 alt={`${user.username} is offline`}
                 width="24"
+                height="24"
                 className="w-6 ml-2"
               />
             )}

@@ -85,7 +85,7 @@ export const ChangeAvatarModal: React.VFC = () => {
           type="button"
           onClick={closeChangeAvatarForm}
           className="absolute top-3 right-3">
-          <img src="/images/x.svg" alt="close modal" width="28" />
+          <img src="/images/x.svg" alt="close modal" width="28" height="28" />
         </button>
       </div>
     </Overlay>

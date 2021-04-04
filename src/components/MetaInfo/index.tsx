@@ -20,7 +20,12 @@ export const MetaInfo: React.VFC = () => {
             type="button"
             className="absolute top-6 right-3"
             onClick={handleToggleDrawer}>
-            <img src="/images/x.svg" alt="close metainfo" width="28" />
+            <img
+              src="/images/x.svg"
+              alt="close metainfo"
+              width="28"
+              height="28"
+            />
           </button>
         </aside>
       )}

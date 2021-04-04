@@ -13,6 +13,7 @@ export const SearchMessages: React.VFC = () => {
           src="/images/search.svg"
           alt=""
           width="24"
+          height="24"
           className="w-6 ml-2 bg-white"
         />
         <input
@@ -24,7 +25,13 @@ export const SearchMessages: React.VFC = () => {
         />
       </div>
       <button type="button" onClick={handleToggleDrawer}>
-        <img src="/images/info.svg" alt="" width="28" className="w-7" />
+        <img
+          src="/images/info.svg"
+          alt=""
+          width="28"
+          height="28"
+          className="w-7"
+        />
       </button>
     </div>
   );

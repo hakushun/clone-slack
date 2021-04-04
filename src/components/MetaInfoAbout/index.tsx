@@ -47,6 +47,7 @@ export const MetaInfoAbout: React.VFC = () => {
               src={currentChannel.createdBy?.avatarURL}
               alt="your avatar"
               width="20"
+              height="20"
               className="mr-2 w-5 rounded-full"
             />
             <span>{currentChannel.createdBy?.username}</span>

@@ -45,6 +45,7 @@ export const MetaInfoMembers: React.VFC = () => {
                 src={user.avatarURL}
                 alt="your avatar"
                 width="20"
+                height="20"
                 className="mr-2 w-5 rounded-full"
               />
               <span>{user.username}</span>

@@ -42,6 +42,7 @@ export const MessageItem: React.VFC<Props> = ({ messages }) => {
                 src="/images/trash.svg"
                 alt="delete message"
                 width="16"
+                height="16"
                 className="w-4"
               />
             </button>

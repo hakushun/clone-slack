@@ -132,7 +132,12 @@ export const ChannelForm: React.VFC = () => {
               type="button"
               onClick={closeChannelForm}
               className="absolute top-3 right-3">
-              <img src="/images/x.svg" alt="close modal" width="28" />
+              <img
+                src="/images/x.svg"
+                alt="close modal"
+                width="28"
+                height="28"
+              />
             </button>
           </div>
         </Overlay>

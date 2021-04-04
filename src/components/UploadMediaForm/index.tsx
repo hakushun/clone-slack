@@ -61,7 +61,12 @@ export const UploadMediaForm: React.VFC = () => {
               type="button"
               onClick={closeUploadMediaForm}
               className="absolute top-3 right-3">
-              <img src="/images/x.svg" alt="close modal" width="28" />
+              <img
+                src="/images/x.svg"
+                alt="close modal"
+                width="28"
+                height="28"
+              />
             </button>
           </div>
         </Overlay>
