@@ -34,7 +34,7 @@ export const useAuth: UseAuthType = () => {
 
       await createdUser.user.updateProfile({
         displayName: username,
-        photoURL: `http://gravatar.com/avatar/${md5(
+        photoURL: `https://gravatar.com/avatar/${md5(
           createdUser.user.uid,
         )}?d=identicon`,
       });
